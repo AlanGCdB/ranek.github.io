@@ -1,29 +1,66 @@
-import Vue from 'vue'
-import VueRouter from 'vue-router'
-import HomeView from '../views/HomeView.vue'
+import Vue from "vue";
+import VueRouter from "vue-router";
+import HomeView from "../views/HomeView.vue";
+import ProductView from "../views/ProductView.vue";
+import LoginView from "../views/LoginView.vue";
+import UsuarioView from "../views/usuario/UsuarioView.vue";
+import UsuarioProdutos from "../views/usuario/UsuarioProdutos.vue";
+import UsuarioCompras from "../views/usuario/UsuarioCompras.vue";
+import UsuarioEditar from "../views/usuario/UsuarioEditar.vue";
+import UsuarioVendas from "../views/usuario/UsuarioVendas.vue";
 
-Vue.use(VueRouter)
-
-const routes = [
-  {
-    path: '/',
-    name: 'home',
-    component: HomeView
-  },
-  {
-    path: '/about',
-    name: 'about',
-    // route level code-splitting
-    // this generates a separate chunk (about.[hash].js) for this route
-    // which is lazy-loaded when the route is visited.
-    component: () => import(/* webpackChunkName: "about" */ '../views/AboutView.vue')
-  }
-]
+Vue.use(VueRouter);
 
 const router = new VueRouter({
-  mode: 'history',
+  mode: "history",
   base: process.env.BASE_URL,
-  routes
-})
+  routes: [
+    {
+      path: "/",
+      name: "HomeView",
+      component: HomeView,
+    },
+    {
+      path: "/produto/:id",
+      name: "ProductView",
+      component: ProductView,
+      props: true,
+    },
+    {
+      path: "/login",
+      name: "LoginView",
+      component: LoginView,
+    },
+    {
+      path: "/usuario",
+      component: UsuarioView,
+      children: [
+        {
+          path: "",
+          name: "UsuarioView",
+          component: UsuarioProdutos,
+        },
+        {
+          path: "Compras",
+          name: "UsuarioCompra",
+          component: UsuarioCompras,
+        },
+        {
+          path: "Editar",
+          name: "UsuarioEditar",
+          component: UsuarioEditar,
+        },
+        {
+          path: "Vendas",
+          name: "UsuarioVendas",
+          component: UsuarioVendas,
+        },
+      ],
+    },
+  ],
+  scrollBehavior() {
+    return window.scrollTo({ top: 0, behavior: "smooth" });
+  },
+});
 
-export default router
+export default router;

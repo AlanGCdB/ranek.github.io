@@ -1,32 +1,110 @@
 <template>
   <div id="app">
-    <nav>
-      <router-link to="/">Home</router-link> |
-      <router-link to="/about">About</router-link>
-    </nav>
-    <router-view/>
+    <TheHeader />
+    <main id="main">
+      <transition mode="in-out">
+        <router-view></router-view>
+      </transition>
+    </main>
+    <TheFooter />
   </div>
 </template>
+<script>
+import TheHeader from "@/components/TheHeader.vue";
+import TheFooter from "@/components/TheFooter.vue";
+export default {
+  components: {
+    TheHeader,
+    TheFooter,
+  },
+};
+</script>
 
 <style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+*,
+*::before,
+*::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: Arial, Helvetica, sans-serif;
+}
+li {
+  list-style: none;
+}
+a {
+  text-decoration: none;
+  color: #345;
+}
+body {
+  color: #345;
+  background: url("./assets/pattern.svg") repeat top;
+}
+img {
+  max-width: 100%;
+  display: block;
+}
+.btn {
+  display: block;
+  padding: 10px 30px;
+  background: #87f;
+  border-radius: 4px;
+  color: #ffffff;
   text-align: center;
-  color: #2c3e50;
+  font-size: 1rem;
+  box-shadow: 0 4px 8px rgba(30, 60, 90, 0.2);
+  transition: all 0.3s;
+  border: none;
+  cursor: pointer;
+}
+.btn:hover {
+  background: #65b;
+  transform: scale(1.1);
+}
+#app {
+  display: flex;
+  min-height: 100vh;
+  flex-direction: column;
+}
+#main {
+  flex: 1;
+}
+label {
+  margin-bottom: 5px;
+  margin-top: 5px;
 }
 
-nav {
-  padding: 30px;
+input,
+textarea {
+  border-radius: 4px;
+  border: 1px solid white;
+  padding: 15px;
+  box-shadow: 0 4px 8px rgba(30, 60, 90, 0.2);
+  transition: all 0.3s;
+  font-size: 1rem;
+}
+input:hover,
+input:focus,
+textarea:hover,
+textarea:focus {
+  outline: none;
+  box-shadow: 0 6px 12px rgba(30, 60, 90, 0.3);
+  border-color: #87f;
 }
 
-nav a {
-  font-weight: bold;
-  color: #2c3e50;
+.v-enter,
+.v-leave-to {
+  opacity: 0;
+}
+.v-enter {
+  transform: translate3d(0 - 20px, 0);
+}
+.v-enter-to {
+  transform: translate3d(0, 20px, 0);
 }
 
-nav a.router-link-exact-active {
-  color: #42b983;
+.v-enter-active,
+.v-leave-active {
+  transition: all 0.3s;
 }
 </style>
